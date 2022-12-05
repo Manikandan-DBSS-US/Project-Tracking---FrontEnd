@@ -1,0 +1,32 @@
+﻿body {
+}
+.login-img{
+    background: none !important;
+}
+/*--------candidate panel----------*/
+.expanel-candidate {
+    border: 1px solid #e9edf4 !important;
+}
+
+    .expanel-candidate > .expanel-heading {
+        color: #fff !important;
+        background-color: #f5a658 !important;
+        border-color: #f5a658 !important;
+    }
+
+/*--------candidate panel ends----------*/
+
+
+/*--------employer panel----------*/
+.expanel-employer {
+    border: 1px solid #e9edf4 !important;
+}
+
+    .expanel-employer > .expanel-heading {
+        color: #fff !important;
+        background-color: #8bb988 !important;
+        border-color: #8bb988 !important;
+    }
+/*--------employer panel ends----------*/
+
+/*-----ot admin blue color: #6896d1  */
