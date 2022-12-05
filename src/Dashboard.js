@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Home } from "./Pages/Home/Home";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { CreateUser } from "./Pages/Create User/CreateUser";
+import { UserLists } from "./Pages/Users Listing/UserLists";
+import { CreateProject } from "./Pages/Create Project/CreateProject";
+import { ProjectLists } from "../src/Pages/Project Listing/ProjectLists";
+import { CreateTask } from "./Pages/Create Task/CreateTask";
+import { TaskLists } from "./Pages/Task Listing/TaskLists";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
@@ -380,8 +386,67 @@ export const Dashboard = () => {
                   <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide">
                       <i class="side-menu__icon fe fe-layers"></i>
-                      <span class="side-menu__label btn-over">
-                        Profile Builder
+                      <span
+                        class="side-menu__label btn-over"
+                        onClick={() => navigate("/CreateUser")}
+                      >
+                        Create User
+                      </span>
+                    </a>
+                  </li>
+                  <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide">
+                      <i class="side-menu__icon fe fe-layers"></i>
+                      <span
+                        class="side-menu__label btn-over"
+                        onClick={() => navigate("/UserLists")}
+                      >
+                        User Lists
+                      </span>
+                    </a>
+                  </li>
+                  <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide">
+                      <i class="side-menu__icon fe fe-layers"></i>
+                      <span
+                        class="side-menu__label btn-over"
+                        onClick={() => navigate("/CreateProject")}
+                      >
+                        Create Project
+                      </span>
+                    </a>
+                  </li>
+
+                  <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide">
+                      <i class="side-menu__icon fe fe-layers"></i>
+                      <span
+                        class="side-menu__label btn-over"
+                        onClick={() => navigate("/ProjectLists")}
+                      >
+                        Project Lists
+                      </span>
+                    </a>
+                  </li>
+                  <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide">
+                      <i class="side-menu__icon fe fe-layers"></i>
+                      <span
+                        class="side-menu__label btn-over"
+                        onClick={() => navigate("/CreateTask")}
+                      >
+                        Create Task
+                      </span>
+                    </a>
+                  </li>
+                  <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide">
+                      <i class="side-menu__icon fe fe-layers"></i>
+                      <span
+                        class="side-menu__label btn-over"
+                        onClick={() => navigate("/TaskLists")}
+                      >
+                        Task Lists
                       </span>
                     </a>
                   </li>
@@ -413,6 +478,12 @@ export const Dashboard = () => {
               <div class="row m-3">
                 <Routes>
                   <Route path="/home" element={<Home />} />
+                  <Route path="/CreateUser" element={<CreateUser />} />
+                  <Route path="/UserLists" element={<UserLists />} />
+                  <Route path="/CreateProject" element={<CreateProject />} />
+                  <Route path="/ProjectLists" element={<ProjectLists />} />
+                  <Route path="/CreateTask" element={<CreateTask />} />
+                  <Route path="/TaskLists" element={<TaskLists />} />
                 </Routes>
               </div>
             </div>
