@@ -37,3 +37,11 @@ export const logoutThunk = async(url,thunkAPI) => {
         return thunkAPI.rejectWithValue(error.response.data.msg)
     }
 }
+export const getAllUserThunk = async(url,thunkAPI) => {
+    try {
+        const resp = await customFetch.get(url);
+        return resp.data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data.msg)
+    }
+}

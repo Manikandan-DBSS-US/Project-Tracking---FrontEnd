@@ -6,6 +6,7 @@ import {
 } from "../../localStorage";
 import {
   getAccessTokenThunk,
+  getAllUserThunk,
   loginThunk,
   logoutThunk,
   registerThunk,
@@ -15,7 +16,7 @@ const initialState = {
   isLoading: false,
   errorValue: {},
   user: getUserFromLocalStorage(),
-  firstUser:localStorage.getItem('firstUser'),
+  firstUser:localStorage.getItem('firstUser') ? localStorage.getItem('firstUser') :"" ,
   token:"",
   isSubmit: false,
   userId: "",
@@ -59,6 +60,12 @@ export const logoutUser = createAsyncThunk(
     return logoutThunk("user/logout", thunkAPI);
   }
 );
+
+export const getAllUser = createAsyncThunk("user/getAllUser",async(_,thunkAPI) =>{
+  return getAllUserThunk("user", thunkAPI);
+
+})
+
 
 const userSlice = createSlice({
   name: "User",
@@ -130,6 +137,18 @@ const userSlice = createSlice({
       state.token = payload.access_token
     },
     [getAccessToken.rejected]: (state, { payload }) => {
+      console.log(payload);
+    },
+    //getAccessToken
+    [getAllUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllUser.fulfilled]: (state, { payload }) => {
+      console.log({payload});
+      state.isLoading = false;
+      // state.token = payload.access_token
+    },
+    [getAllUser.rejected]: (state, { payload }) => {
       console.log(payload);
     },
   },

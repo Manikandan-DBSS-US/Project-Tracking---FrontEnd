@@ -47,6 +47,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (firstUser) {
+      console.log("ohouadhihdohadoho");
       dispatch(resetValues());
       dispatch(getAccessToken())
       navigate("/");

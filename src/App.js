@@ -5,8 +5,8 @@ import Router from "./Router";
 const App = () => {
   return (
     <div>
-      {/* <Router /> */}
-      <Dashboard />
+      <Router />
+      {/* <Dashboard /> */}
     </div>
   );
 };

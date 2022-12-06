@@ -1,4 +1,13 @@
+import { useEffect } from "react";
+import {useSelector,useDispatch} from 'react-redux'
+import { getAllUser } from "../../app/feature/User/userSlice";
+
 const UserLists = () => {
+  const dispatch = useDispatch()
+  const {token} = useSelector(store => store.userReducer)
+  useEffect(() => {
+    dispatch(getAllUser())
+  },[])
   return (
     <div>
       <h3 className="text-primary">User Lists</h3>
