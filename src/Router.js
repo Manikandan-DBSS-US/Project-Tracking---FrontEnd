@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import {
+  CreateProject,
   CreateUser,
   Dashboard,
   ErrorPage,
@@ -14,19 +15,6 @@ import SharedLayoutPage from "./pages/SharedLayoutPage";
 const Router = () => {
   return (
     <Routes>
-      {/* <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <SharedLayoutPage />
-          </ProtectedRoute>
-        }
-      >
-      </Route> */}
-      {/* <Route index element={<Dashboard />} /> */}
-      {/* <Route path="/" element={<HomePage />} /> */}
-      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-
       <Route
         path="/"
         element={
@@ -38,8 +26,8 @@ const Router = () => {
         <Route index element={<Dashboard />} />
         <Route path="create-user" element={<CreateUser />} />
         <Route path="users-list" element={<UsersList />} />
-      <Route path="/*" element={<ErrorPage />} />
-
+        <Route path="create-project" element={<CreateProject/>}/>
+        <Route path="/*" element={<ErrorPage />} />
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
