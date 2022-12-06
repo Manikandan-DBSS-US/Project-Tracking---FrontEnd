@@ -6,8 +6,8 @@ import { Signup } from "./Pages/Signup/Signup";
 function App() {
   return (
     <div>
-      {/* <Login/> */}
-      <Dashboard />
+      <Login/>
+      {/* <Dashboard /> */}
       {/* <Signup/> */}
     </div>
   );

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "../Login/Login.css";
 import { BiLogIn } from "react-icons/bi";
+import axios from "axios";
 
 export const Login = () => {
   const [form, setForm] = useState({
-    email: "",
+    userName: "",
     password: "",
   });
 
@@ -12,20 +13,20 @@ export const Login = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(form);
+    const data = await axios.post(" http://localhost:5000/api/v1/user/login", form);
+    console.log(data);
   };
 
   return (
     <div className="container mt-2">
+      <h3 className="text-primary">login to your account</h3>
       <div className="row justify-content-center">
         {/* Design Page */}
-        <div className="col-lg-6 text-center mt-5 design-LoginPage">
+        <div className="col-lg-6 text-center design-LoginPage">
           <div className="mt-5">
-            <div>
-              <h3 className="text-primary">login to your account</h3>
-            </div>
             <img
               src="https://my.viciboxcenter.com/assets/media/svg/login.svg"
               className="w-75"
@@ -49,11 +50,11 @@ export const Login = () => {
                   </h1>
                 </div>
                 <div>
-                  <h6>Email</h6>
+                  <h6>User Name</h6>
                   <input
                     className="form-control"
-                    name="email"
-                    value={form.email}
+                    name="userName"
+                    value={form.userName}
                     onChange={handleChange}
                   />
                 </div>
