@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const a = "empty";
 
   return (
     <div>
