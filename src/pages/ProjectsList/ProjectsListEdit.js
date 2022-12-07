@@ -7,25 +7,32 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 
 export const ProjectsListEdit = () => {
-    
   const navigate = useNavigate("");
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [project, setProjects] = useState([]);
 
   const getProjectsList = async () => {
     try {
-        const data = await axios.get(`http://localhost:5000/api/v1/project/getOneProject/${id}`);
-        setProjects(data.data.project);
+      const data = await axios.get(
+        `http://localhost:5000/api/v1/project/getOneProject/${id}`
+      );
+      setProjects(data.data.project);
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
-  }
+  };
+
+  console.log(
+    `${new Date(project.projectStartDate).getFullYear()}-${new Date(
+      project.projectStartDate
+    ).getMonth()}-${new Date(project.projectStartDate).getDate()}`
+  );
 
   useEffect(() => {
     getProjectsList();
-  },[])
+  }, []);
 
   console.log(project);
   const UserSchema = Yup.object().shape({
@@ -45,26 +52,36 @@ export const ProjectsListEdit = () => {
       ),
   });
 
-
   return (
     <div>
       <Formik
-      enableReinitialize 
+        enableReinitialize
         initialValues={{
           projectName: project.projectName,
           projectDescription: project.projectDescription,
           clientName: project.clientName,
-          projectStartDate:  project.projectStartDate,
-          projectEndDate: project.projectEndDate,
+          projectStartDate: `${new Date(
+            project.projectStartDate
+          ).getFullYear()}-${new Date(
+            project.projectStartDate
+          ).getMonth()}-${new Date(project.projectStartDate).getDate()}`,
+          projectEndDate: `${new Date(
+            project.projectEndDate
+          ).getFullYear()}-${new Date(
+            project.projectEndDate
+          ).getMonth()}-${new Date(project.projectEndDate).getDate()}`,
           technologiesUsed: project.technologiesUsed,
           selectUsers: project.selectUsers,
         }}
         validationSchema={UserSchema}
         onSubmit={async (values) => {
           try {
-            const data = await axios.put(`http://localhost:5000/api/v1/project/update/${id}`, values);
+            const data = await axios.put(
+              `http://localhost:5000/api/v1/project/update/${id}`,
+              values
+            );
             console.log(data);
-            navigate("/projects-list")
+            navigate("/projects-list");
           } catch (error) {
             console.log(error.message);
           }
