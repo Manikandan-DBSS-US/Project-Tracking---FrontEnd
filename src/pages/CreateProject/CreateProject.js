@@ -4,9 +4,9 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
-
+import { useEffect, useState } from "react";
+ 
 export const CreateProject = () => {
-    
   const navigate = useNavigate("");
 
   const UserSchema = Yup.object().shape({
@@ -25,6 +25,7 @@ export const CreateProject = () => {
         })
       ),
   });
+
 
   return (
     <div>
@@ -46,7 +47,7 @@ export const CreateProject = () => {
               "http://localhost:5000/api/v1/project/create",
               values
             );
-            console.log(data);
+            navigate("/projects-list");
           } catch (error) {
             console.log(error.message);
           }
@@ -172,17 +173,17 @@ export const CreateProject = () => {
                 <div className="col d-flex flex-column gap-3">
                   <div>
                     <h6>
-                      Project Description <span className="text-danger">*</span>
+                      Select Users <span className="text-danger">*</span>
                     </h6>
-                    <Field
-                      name="projectDescription"
-                      type="text"
-                      className="form-control"
+                    <MySelect
+                      value={values.selectUsers}
+                      onChange={setFieldValue}
+                      onBlur={setFieldTouched}
+                      error={errors.selectUsers}
+                      touched={touched.selectUsers}
                     />
-                    {errors.projectDescription && touched.projectDescription ? (
-                      <div className="text-danger">
-                        {errors.projectDescription}*
-                      </div>
+                    {errors.selectUsers && touched.selectUsers ? (
+                      <div className="text-danger">{errors.selectUsers}*</div>
                     ) : null}
                   </div>
                   <div>
@@ -202,22 +203,23 @@ export const CreateProject = () => {
                   </div>
                   <div>
                     <h6>
-                      Select Users <span className="text-danger">*</span>
+                      Project Description <span className="text-danger">*</span>
                     </h6>
-                    <MySelect
-                      value={values.selectUsers}
-                      onChange={setFieldValue}
-                      onBlur={setFieldTouched}
-                      error={errors.selectUsers}
-                      touched={touched.selectUsers}
+                    <Field
+                      component="textarea"
+                      name="projectDescription"
+                      type="text"
+                      className="form-control"
                     />
-                    {errors.selectUsers && touched.selectUsers ? (
-                      <div className="text-danger">{errors.selectUsers}*</div>
+                    {errors.projectDescription && touched.projectDescription ? (
+                      <div className="text-danger">
+                        {errors.projectDescription}*
+                      </div>
                     ) : null}
                   </div>
                   <button
                     type="submit"
-                    className="form-control btn btn-outline-success fw-bold"
+                    className="form-control btn btn-success fw-bold"
                   >
                     Submit
                   </button>
@@ -240,7 +242,9 @@ const options = [
   { value: "Kittens", label: "Kittens" },
 ];
 
+
 class MySelect extends React.Component {
+
   handleChange = (value) => {
     // this is going to call setFieldValue and manually update values.topcis
     this.props.onChange("selectUsers", value);
@@ -253,7 +257,7 @@ class MySelect extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: "1rem 0" }}>
+      <div>
         {/* <label htmlFor="color">Topics (select at least 3) </label> */}
         <Select
           id="color"

@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "../../common/LoadingSpinner";
 
 const ProjectsList = () => {
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate("");
 
   const [project, setProject] = useState([]);
@@ -15,6 +18,7 @@ const ProjectsList = () => {
         "http://localhost:5000/api/v1/project/getAllProjects"
       );
       setProject(data.data.projects);
+      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -24,7 +28,10 @@ const ProjectsList = () => {
   const deleteProject = async ({ projectName, _id }) => {
     if (window.confirm(`Are You Sure Delete This Project ${projectName}`)) {
       try {
-        await axios.delete(`http://localhost:5000/api/v1/project/delete/${_id}`, { _id });
+        await axios.delete(
+          `http://localhost:5000/api/v1/project/delete/${_id}`,
+          { _id }
+        );
         alert("Deleted Successfully");
         getProjects();
       } catch (error) {
@@ -39,7 +46,10 @@ const ProjectsList = () => {
 
   return (
     <div>
-      <h3 className="text-primary">Project Lists</h3>
+      <div className="d-flex gap-3">
+        <h3 className="text-primary">Project Lists</h3>
+        {loading && <LoadingSpinner />}
+      </div>
       <div className="card">
         <div className="card-body">
           <table className="table table-responsive">
@@ -80,10 +90,18 @@ const ProjectsList = () => {
                     </td>
                     <td>
                       <div className="d-flex gap-2">
-                        <button className="btn text-warning" onClick={() => navigate("/projects-list/" + element._id)}>
+                        <button
+                          className="btn text-warning"
+                          onClick={() =>
+                            navigate("/projects-list/" + element._id)
+                          }
+                        >
                           <AiFillEdit />
                         </button>
-                        <button className="btn text-danger" onClick={() => deleteProject(element)}>
+                        <button
+                          className="btn text-danger"
+                          onClick={() => deleteProject(element)}
+                        >
                           <AiFillDelete />
                         </button>
                       </div>

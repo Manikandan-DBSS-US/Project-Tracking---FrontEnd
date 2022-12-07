@@ -5,8 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import { useEffect, useState } from "react";
+import { LoadingSpinner } from "../../common/LoadingSpinner.js";
 
 export const ProjectsListEdit = () => {
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate("");
 
   const { id } = useParams();
@@ -19,6 +22,7 @@ export const ProjectsListEdit = () => {
         `http://localhost:5000/api/v1/project/getOneProject/${id}`
       );
       setProjects(data.data.project);
+      setLoading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -89,7 +93,10 @@ export const ProjectsListEdit = () => {
       >
         {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
           <div className="container mb-5 p-3">
-            <h3 className="text-primary">Edit Project</h3>
+            <div className="d-flex gap-3">
+              <h3 className="text-primary">Edit Project</h3>
+              {loading && <LoadingSpinner />}
+            </div>
             <div className="card">
               <Form className="row justify-content-center card-body">
                 <div className="col d-flex flex-column gap-3">
@@ -207,17 +214,17 @@ export const ProjectsListEdit = () => {
                 <div className="col d-flex flex-column gap-3">
                   <div>
                     <h6>
-                      Project Description <span className="text-danger">*</span>
+                      Select Users <span className="text-danger">*</span>
                     </h6>
-                    <Field
-                      name="projectDescription"
-                      type="text"
-                      className="form-control"
+                    <MySelect
+                      value={values.selectUsers}
+                      onChange={setFieldValue}
+                      onBlur={setFieldTouched}
+                      error={errors.selectUsers}
+                      touched={touched.selectUsers}
                     />
-                    {errors.projectDescription && touched.projectDescription ? (
-                      <div className="text-danger">
-                        {errors.projectDescription}*
-                      </div>
+                    {errors.selectUsers && touched.selectUsers ? (
+                      <div className="text-danger">{errors.selectUsers}*</div>
                     ) : null}
                   </div>
                   <div>
@@ -237,17 +244,18 @@ export const ProjectsListEdit = () => {
                   </div>
                   <div>
                     <h6>
-                      Select Users <span className="text-danger">*</span>
+                      Project Description <span className="text-danger">*</span>
                     </h6>
-                    <MySelect
-                      value={values.selectUsers}
-                      onChange={setFieldValue}
-                      onBlur={setFieldTouched}
-                      error={errors.selectUsers}
-                      touched={touched.selectUsers}
+                    <Field
+                      component="textarea"
+                      name="projectDescription"
+                      type="text"
+                      className="form-control"
                     />
-                    {errors.selectUsers && touched.selectUsers ? (
-                      <div className="text-danger">{errors.selectUsers}*</div>
+                    {errors.projectDescription && touched.projectDescription ? (
+                      <div className="text-danger">
+                        {errors.projectDescription}*
+                      </div>
                     ) : null}
                   </div>
                   <button
@@ -275,6 +283,7 @@ const options = [
   { value: "Kittens", label: "Kittens" },
 ];
 
+
 class MySelect extends React.Component {
   handleChange = (value) => {
     // this is going to call setFieldValue and manually update values.topcis
@@ -288,7 +297,7 @@ class MySelect extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: "1rem 0" }}>
+      <div>
         {/* <label htmlFor="color">Topics (select at least 3) </label> */}
         <Select
           id="color"
