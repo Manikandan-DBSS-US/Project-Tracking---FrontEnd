@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import "../pages/SharedLayout.css";
 
 const SharedLayoutPage = () => {
   const navigate = useNavigate();
@@ -493,7 +494,7 @@ const SharedLayoutPage = () => {
                   <Route path="/CreateTask" element={<CreateTask />} />
                   <Route path="/TaskLists" element={<TaskLists />} /> 
                 </Routes> */}
-                <Outlet />
+                  <Outlet />
                 </div>
               </div>
             </div>
