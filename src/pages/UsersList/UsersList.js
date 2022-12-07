@@ -14,9 +14,10 @@ const UserLists = () => {
   return (
     <div>
       <h3 className="text-primary">User Lists</h3>
-      <div>
+      <div className="card">
+        <div className="card-body">
         <table className="table table-responsive">
-          <thead className="table-danger">
+          <thead className="bg-light">
             <tr>
               {[
                 "User Id",
@@ -55,6 +56,7 @@ const UserLists = () => {
            
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

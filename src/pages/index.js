@@ -9,6 +9,6 @@ export {default as CreateProject} from './CreateProject/CreateProject';
 export {default as CreateUser} from './CreateUser/CreateUser';
 export {default as CreateTask} from './CreateTask/CreateTask';
 export {default as Dashboard} from './Dashboard/Dashboard';
-export {default as ProjectLists} from './ProjectLists/ProjectLists';
+export {default as ProjectsList} from './ProjectsList/ProjectsList';
 export {default as TaskLists} from './TaskLists/TaskLists';
 export {default as UsersList} from './UsersList/UsersList';

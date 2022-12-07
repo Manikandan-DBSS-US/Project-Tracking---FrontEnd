@@ -6,6 +6,7 @@ import {
   ErrorPage,
   HomePage,
   LoginPage,
+  ProjectsList,
   RegisterPage,
   UsersList,
 } from "./pages";
@@ -27,12 +28,13 @@ const Router = () => {
         <Route path="create-user" element={<CreateUser />} />
         <Route path="users-list" element={<UsersList />} />
         <Route path="create-project" element={<CreateProject/>}/>
-        <Route path="/*" element={<ErrorPage />} />
+        <Route path="projects-list" element={<ProjectsList/>}/> 
+        {/* <Route path="/*" element={<ErrorPage />} /> */}
       </Route>
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="*" element={<ErrorPage />} />
+      {/* <Route path="*" element={<ErrorPage />} /> */}
     </Routes>
   );
 };
