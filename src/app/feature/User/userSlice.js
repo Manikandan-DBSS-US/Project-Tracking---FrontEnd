@@ -16,6 +16,7 @@ const initialState = {
   isLoading: false,
   errorValue: {},
   user: getUserFromLocalStorage(),
+  users:[],
   firstUser:localStorage.getItem('firstUser') ? localStorage.getItem('firstUser') :"" ,
   token:"",
   isSubmit: false,
@@ -103,9 +104,13 @@ const userSlice = createSlice({
     [registerUser.pending]: (state) => {
       state.isLoading = true;
     },
-    [registerUser.fulfilled]: (state, { payload }) => {},
+    [registerUser.fulfilled]: (state, { payload }) => {
+      resetValues()
+      toast.success("User Created!");
+    },
     [registerUser.rejected]: (state, { payload }) => {
-      console.log(payload);
+      toast.error(payload);
+
     },
     //loginUser
     [loginUser.pending]: (state) => {
@@ -146,7 +151,7 @@ const userSlice = createSlice({
     [getAllUser.fulfilled]: (state, { payload }) => {
       console.log({payload});
       state.isLoading = false;
-      // state.token = payload.access_token
+      state.users = payload.users
     },
     [getAllUser.rejected]: (state, { payload }) => {
       console.log(payload);
