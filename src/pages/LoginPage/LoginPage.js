@@ -32,17 +32,17 @@ const LoginPage = () => {
       userName,
       password,
     };
+
+    dispatch(
+      errorValidation(
+        loginValidation({
+          userName,
+          password,
+        })
+      )
+    );
     dispatch(loginUser(user));
 
-    // dispatch(
-    //   errorValidation(
-    //     loginValidation({
-    //       userName,
-    //       password,
-    //     })
-    //   )
-    // );
-    // dispatch(submit());
   };
 
   useEffect(() => {
@@ -53,17 +53,7 @@ const LoginPage = () => {
       navigate("/");
     }
   }, [firstUser]);
-  // useEffect(() => {
-  //   if (Object.values(errorValue).length === 0 && isSubmit) {
-  //     const user = {
-  //       userName,
-  //       password,
-  //     };
-  //     dispatch(loginUser(user));
-  //     dispatch(resetValues());
-  //   }
-  // }, [isSubmit]);
-
+ 
   return (
     <div className="container mt-2">
       <div className="row justify-content-center">

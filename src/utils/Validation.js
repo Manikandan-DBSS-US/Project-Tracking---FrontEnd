@@ -3,14 +3,13 @@ function isEmail(email) {
   const re =
     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   return re.test(email);
-};
+}
 
 function ValidatePhoneNumber(phone) {
-    return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(phone);
+  return /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(phone);
 }
 
 export const registerValidation = ({
-  userId,
   userName,
   firstName,
   lastName,
@@ -21,9 +20,7 @@ export const registerValidation = ({
   phoneNumber,
 }) => {
   const error = {};
-  if (!userId) {
-    error.userId = "User Id is required";
-  }
+
   if (!userName) {
     error.userName = "UserName  is required";
   }
@@ -61,12 +58,7 @@ export const registerValidation = ({
   return error;
 };
 
-
-
-export const loginValidation = ({
-  userName,
-  password
-}) => {
+export const loginValidation = ({ userName, password }) => {
   const error = {};
   if (!userName) {
     error.userName = "Username  is required";
@@ -76,4 +68,35 @@ export const loginValidation = ({
   }
 
   return error;
-}
+};
+
+export const taskCreateValidation = ({
+  name,
+  description,
+  dueDate,
+  effort,
+  isCompleted,
+  isVerified,
+}) => {
+  const error = {};
+  if (!name) {
+    error.name = "Name is required";
+  }
+  if (!description) {
+    error.description = "Description is required";
+  }
+  if (!dueDate) {
+    error.dueDate = "Due Date is required";
+  }
+  if (!effort) {
+    error.effort = "Effort is required";
+  }
+  if (!isCompleted) {
+    error.isCompleted = "Is Completed is required";
+  }
+  if (!isVerified) {
+    error.isVerified = "Is Verified is required";
+  }
+
+  return error;
+};
