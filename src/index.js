@@ -12,7 +12,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
-      <ToastContainer position='top-center' />
+      <ToastContainer position='top-right' />
     </BrowserRouter>
   </Provider>
 );

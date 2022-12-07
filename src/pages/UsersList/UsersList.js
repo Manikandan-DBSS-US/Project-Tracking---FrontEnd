@@ -1,16 +1,37 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUser } from "../../app/feature/User/userSlice";
+import {
+  deleteUser,
+  editUser,
+  getAllUser,
+  setEdit,
+} from "../../app/feature/User/userSlice";
+import { HiOutlineTrash } from "react-icons/hi";
+import { AiOutlineEdit } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const UserLists = () => {
   const dispatch = useDispatch();
-  const { token, users } = useSelector((store) => store.userReducer);
+  const navigate = useNavigate()
+  const { token, users, isLoading } = useSelector((store) => store.userReducer);
   console.log({ token });
   useEffect(() => {
     dispatch(getAllUser());
   }, []);
 
+  const editHandler = (id) => {
+    navigate("/create-user")
+    dispatch(setEdit())
+    dispatch(editUser(id));
+    
+  };
+
+  const deleteHandler = (id) => {
+    dispatch(deleteUser(id));
+  };
+
   console.log({ users });
+  if (isLoading) return <h1>Loading .....</h1>;
   return (
     <div>
       <h3 className="text-primary">User Lists</h3>
@@ -20,7 +41,6 @@ const UserLists = () => {
           <thead className="bg-light">
             <tr>
               {[
-                "User Id",
                 "User Name",
                 "First Name",
                 "Last Name",
@@ -38,7 +58,6 @@ const UserLists = () => {
             {users &&
               users?.map((data, index) => (
                 <tr key={index}>
-                  <td>{data.userId}</td>
                   <td>{data.userName}</td>
                   <td>{data.firstName}</td>
                   <td>{data.lastName}</td>
@@ -47,13 +66,24 @@ const UserLists = () => {
                   <td>{data.gender}</td>
                   <td>{data.phoneNumber}</td>
 
-                  <td className="btn">
-                    <button>edit</button>
-                    <button>delete</button>
+                  <td className="">
+                    <span
+                      onClick={() => editHandler(data._id)}
+                      className="mx-1 text-success"
+                    >
+                      <AiOutlineEdit />
+                    </span>
+                    <span
+                      onClick={() => {
+                        deleteHandler(data._id);
+                      }}
+                      className="mx-1 text-danger"
+                    >
+                      <HiOutlineTrash />
+                    </span>
                   </td>
                 </tr>
               ))}
-           
           </tbody>
         </table>
         </div>

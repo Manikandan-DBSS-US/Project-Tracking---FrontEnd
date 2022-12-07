@@ -442,7 +442,7 @@ const SharedLayoutPage = () => {
                         <i class="side-menu__icon fe fe-layers"></i>
                         <span
                           class="side-menu__label btn-over"
-                          onClick={() => navigate("/CreateTask")}
+                          onClick={() => navigate("/create-task")}
                         >
                           Create Task
                         </span>
