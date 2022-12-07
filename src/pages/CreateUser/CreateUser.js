@@ -58,7 +58,7 @@ const CreateUser = () => {
     dispatch(submit());
   };
   useEffect(() => {
-    if (Object.values(errorValue).length === 0) {
+    if (Object.values(errorValue).length === 0 && isSubmit) {
       console.log("Submi");
       const user = {
         userId,
@@ -74,9 +74,8 @@ const CreateUser = () => {
         isActive,
       };
       dispatch(registerUser(user));
-      dispatch(resetValues())
     }
-  }, [errorValue]);
+  }, [errorValue,isSubmit]);
 
   return (
     <div className="container mt-1">
@@ -154,7 +153,7 @@ const CreateUser = () => {
                   changeHandler={changeHandler}
                   alert={errorValue["password"]}
                 />
-                <FormRadio
+                {/* <FormRadio
                   type={"radio"}
                   labelText={"Gender"}
                   name={"gender"}
@@ -167,8 +166,8 @@ const CreateUser = () => {
                   ]}
                   changeHandler={changeHandler}
                   alert={errorValue["gender"]}
-                />
-                {/* <div>
+                /> */}
+                <div>
                   <h6>Gender</h6>
                   <div className="d-flex gap-2">
                     <div>
@@ -178,7 +177,7 @@ const CreateUser = () => {
                       <input name="gender" value={"female"} type="radio" onChange={changeHandler} /> Female
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
               <div>
                 <input type="checkbox" />
