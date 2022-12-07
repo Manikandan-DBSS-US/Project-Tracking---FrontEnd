@@ -1,7 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { AiFillEdit } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const ProjectsList = () => {
+  const navigate = useNavigate("");
+
   const [project, setProject] = useState([]);
 
   const getProjects = async () => {
@@ -12,6 +17,19 @@ const ProjectsList = () => {
       setProject(data.data.projects);
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  // delete Project
+  const deleteProject = async ({ projectName, _id }) => {
+    if (window.confirm(`Are You Sure Delete This Project ${projectName}`)) {
+      try {
+        await axios.delete(`http://localhost:5000/api/v1/project/delete/${_id}`, { _id });
+        alert("Deleted Successfully");
+        getProjects();
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 
@@ -35,6 +53,7 @@ const ProjectsList = () => {
                 <th>Project End Date</th>
                 <th>Project Technologies</th>
                 <th>Selected Users</th>
+                <th>options</th>
               </tr>
             </thead>
             <tbody>
@@ -58,6 +77,16 @@ const ProjectsList = () => {
                     </td>
                     <td>
                       {element.selectUsers.map((item) => item.value).join(",")}
+                    </td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <button className="btn text-warning" onClick={() => navigate("/projects-list/" + element._id)}>
+                          <AiFillEdit />
+                        </button>
+                        <button className="btn text-danger" onClick={() => deleteProject(element)}>
+                          <AiFillDelete />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

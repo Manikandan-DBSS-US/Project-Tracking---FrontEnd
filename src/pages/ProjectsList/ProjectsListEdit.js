@@ -1,14 +1,33 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
+import { useEffect, useState } from "react";
 
-export const CreateProject = () => {
+export const ProjectsListEdit = () => {
     
   const navigate = useNavigate("");
 
+  const {id} = useParams();
+
+  const [project, setProjects] = useState([]);
+
+  const getProjectsList = async () => {
+    try {
+        const data = await axios.get(`http://localhost:5000/api/v1/project/getOneProject/${id}`);
+        setProjects(data.data.project);
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getProjectsList();
+  },[])
+
+  console.log(project);
   const UserSchema = Yup.object().shape({
     projectName: Yup.string().required("Required"),
     projectDescription: Yup.string().required("Required"),
@@ -26,27 +45,26 @@ export const CreateProject = () => {
       ),
   });
 
+
   return (
     <div>
       <Formik
+      enableReinitialize 
         initialValues={{
-          projectName: "",
-          projectDescription: "",
-          clientName: "",
-          projectStartDate: "",
-          projectEndDate: "",
-          technologiesUsed: [],
-          selectUsers: [],
+          projectName: project.projectName,
+          projectDescription: project.projectDescription,
+          clientName: project.clientName,
+          projectStartDate:  project.projectStartDate,
+          projectEndDate: project.projectEndDate,
+          technologiesUsed: project.technologiesUsed,
+          selectUsers: project.selectUsers,
         }}
         validationSchema={UserSchema}
         onSubmit={async (values) => {
-          console.log(values);
           try {
-            const data = await axios.post(
-              "http://localhost:5000/api/v1/project/create",
-              values
-            );
+            const data = await axios.put(`http://localhost:5000/api/v1/project/update/${id}`, values);
             console.log(data);
+            navigate("/projects-list")
           } catch (error) {
             console.log(error.message);
           }
@@ -54,7 +72,7 @@ export const CreateProject = () => {
       >
         {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
           <div className="container mb-5 p-3">
-            <h3 className="text-primary">Create Project</h3>
+            <h3 className="text-primary">Edit Project</h3>
             <div className="card">
               <Form className="row justify-content-center card-body">
                 <div className="col d-flex flex-column gap-3">
@@ -217,9 +235,9 @@ export const CreateProject = () => {
                   </div>
                   <button
                     type="submit"
-                    className="form-control btn btn-outline-success fw-bold"
+                    className="form-control btn btn-success fw-bold"
                   >
-                    Submit
+                    Update
                   </button>
                 </div>
               </Form>
@@ -268,4 +286,4 @@ class MySelect extends React.Component {
   }
 }
 
-export default CreateProject;
+export default ProjectsListEdit;

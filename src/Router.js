@@ -10,6 +10,7 @@ import {
   RegisterPage,
   UsersList,
 } from "./pages";
+import { ProjectsListEdit } from "./pages/ProjectsList/ProjectsListEdit";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import SharedLayoutPage from "./pages/SharedLayoutPage";
 
@@ -29,6 +30,7 @@ const Router = () => {
         <Route path="users-list" element={<UsersList />} />
         <Route path="create-project" element={<CreateProject/>}/>
         <Route path="projects-list" element={<ProjectsList/>}/> 
+        <Route path="projects-list/:id" element={<ProjectsListEdit />}/>
         {/* <Route path="/*" element={<ErrorPage />} /> */}
       </Route>
 
