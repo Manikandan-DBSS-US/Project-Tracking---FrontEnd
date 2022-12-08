@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import { useEffect, useState } from "react";
- 
+
 export const CreateProject = () => {
   const navigate = useNavigate("");
 
@@ -25,7 +25,6 @@ export const CreateProject = () => {
         })
       ),
   });
-
 
   return (
     <div>
@@ -233,43 +232,42 @@ export const CreateProject = () => {
   );
 };
 
-const options = [
-  { value: "Food", label: "Food" },
-  { value: "Being Fabulous", label: "Being Fabulous" },
-  { value: "Ken Wheeler", label: "Ken Wheeler" },
-  { value: "ReasonML", label: "ReasonML" },
-  { value: "Unicorns", label: "Unicorns" },
-  { value: "Kittens", label: "Kittens" },
-];
 
+const MySelect = (props) => {
+  const [userlist, setUserList] = useState([]);
 
-class MySelect extends React.Component {
+  useEffect(() => {
+    fetch("http://localhost:5000/api/v1/user")
+      .then((resp) => resp.json())
+      .then((resp) => {
+        const arr = [];
+        resp?.users?.forEach((item) => {
+          arr.push({ value: item.userName, label: item.userName });
+        });
+        setUserList(arr);
+      });
+  }, []);
 
-  handleChange = (value) => {
-    // this is going to call setFieldValue and manually update values.topcis
-    this.props.onChange("selectUsers", value);
+  const handleChange = (value) => {
+    props.onChange("selectUsers", value);
   };
 
-  handleBlur = () => {
-    // this is going to call setFieldTouched and manually update touched.topcis
-    this.props.onBlur("selectUsers", true);
+  const handleBlur = () => {
+    props.onBlur("selectUsers", true);
   };
 
-  render() {
-    return (
-      <div>
-        {/* <label htmlFor="color">Topics (select at least 3) </label> */}
-        <Select
-          id="color"
-          options={options}
-          isMulti={true}
-          onChange={this.handleChange}
-          onBlur={this.handleBlur}
-          value={this.props.value}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Select
+        id="color"
+        options={userlist}
+        isMulti={true}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={props.value}
+      />
+    </div>
+  );
+};
 
 export default CreateProject;
