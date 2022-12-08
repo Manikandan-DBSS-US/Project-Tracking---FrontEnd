@@ -1,11 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   createTask,
   errorValidationTask,
   handleChangeTask,
-  updateTask
+  updateTask,
 } from "../../app/feature/Task/taskSlice";
 
 import FormInput from "../../components/FormInput";
@@ -25,7 +25,7 @@ const CreateTask = () => {
     isEdit,
     editTaskId,
   } = useSelector((store) => store.taskReducer);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -87,112 +87,102 @@ const CreateTask = () => {
     <div className="container  mb-5 p-3">
       <h3 className="text-primary">{isEdit ? "Edit Task" : "Create Task"}</h3>
       <div className="m-3">
-        <div className="row  shadow-lg rounded-1 p-4 mx-auto">
-          <div className="col   ">
-            <form onSubmit={submitHandler} className="row  gap-3">
-              <div className="col d-flex flex-column gap-3">
-                <FormInput
-                  type={"text"}
-                  labelText={"Name"}
-                  name={"name"}
-                  value={name}
-                  changeHandler={changeHandler}
-                  blurHandler={blurHandler}
-                  alert={errorValue["name"]}
-                />
-                <FormText
-                  labelText={"Description"}
-                  name={"description"}
-                  value={description}
-                  changeHandler={changeHandler}
-                  blurHandler={blurHandler}
-                  alert={errorValue["description"]}
-                />
-
-                <FormInput
-                  labelText={"Due Date"}
-                  type={"date"}
-                  name={"dueDate"}
-                  value={dueDate}
-                  blurHandler={blurHandler}
-                  changeHandler={changeHandler}
-                  alert={errorValue["dueDate"]}
-                />
-                <FormInput
-                  labelText={"Effort"}
-                  type={"date"}
-                  name={"effort"}
-                  value={effort}
-                  blurHandler={blurHandler}
-                  changeHandler={changeHandler}
-                  alert={errorValue["effort"]}
-                />
-
-                <FormRadio
-                  type={"radio"}
-                  labelText={"Is Completed"}
-                  name={"isCompleted"}
-                  itemList={[
-                    {
-                      name: "Yes",
-                      value: "yes",
-                    },
-                    { name: "No", value: "no" },
-                  ]}
-                  blurHandler={blurHandler}
-                  changeHandler={changeHandler}
-                  alert={errorValue["isCompleted"]}
-                />
-                <FormRadio
-                  type={"radio"}
-                  labelText={"Is Verified"}
-                  name={"isVerified"}
-                  itemList={[
-                    {
-                      name: "Yes",
-                      value: "yes",
-                    },
-                    { name: "No", value: "no" },
-                  ]}
-                  blurHandler={blurHandler}
-                  changeHandler={changeHandler}
-                  alert={errorValue["isVerified"]}
-                />
-                {/* <div>
-                  <h6>Gender</h6>
-                  <div className="d-flex gap-2">
-                    <div>
-                      <input
-                        name="gender"
-                        value={"male"}
-                        type="radio"
-                        onChange={changeHandler}
-                      />{" "}
-                      Male
-                    </div>
-                    <div>
-                      <input
-                        name="gender"
-                        value={"female"}
-                        type="radio"
-                        onChange={changeHandler}
-                      />{" "}
-                      Female
-                    </div>
-                  </div>
-                  {errorValue["gender"] && (
-                    <p className={` ${errorValue["gender"] && "text-danger"}`}>
-                      {errorValue["gender"]}
-                    </p>
-                  )}
-                </div> */}
-                <button type="submit" className="btn btn-success w-50">
-                  {isEdit ? "Edit Task" : "Create Task"}
-                </button>
+        <form onSubmit={submitHandler}>
+          <div className="card">
+            <div className="card-body">
+              <div className="row justify-content-center">
+                <div className="col">
+                  <FormInput
+                    type={"text"}
+                    labelText={"Name"}
+                    name={"name"}
+                    value={name}
+                    changeHandler={changeHandler}
+                    blurHandler={blurHandler}
+                    alert={errorValue["name"]}
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    labelText={"Due Date"}
+                    type={"date"}
+                    name={"dueDate"}
+                    value={dueDate}
+                    blurHandler={blurHandler}
+                    changeHandler={changeHandler}
+                    alert={errorValue["dueDate"]}
+                  />
+                </div>
+                <div className="col">
+                  <FormInput
+                    labelText={"Effort"}
+                    type={"date"}
+                    name={"effort"}
+                    value={effort}
+                    blurHandler={blurHandler}
+                    changeHandler={changeHandler}
+                    alert={errorValue["effort"]}
+                  />
+                </div>
               </div>
-            </form>
+
+              <div className="row justify-content-center">
+                <div className="col">
+                  <FormText
+                    labelText={"Description"}
+                    name={"description"}
+                    value={description}
+                    changeHandler={changeHandler}
+                    blurHandler={blurHandler}
+                    alert={errorValue["description"]}
+                  />
+                </div>
+              </div>
+
+              <div className="row justify-content-between">
+                <div className="col">
+                  <FormRadio
+                    type={"radio"}
+                    labelText={"Is Completed"}
+                    name={"isCompleted"}
+                    itemList={[
+                      {
+                        name: "Yes",
+                        value: "yes",
+                      },
+                      { name: "No", value: "no" },
+                    ]}
+                    blurHandler={blurHandler}
+                    changeHandler={changeHandler}
+                    alert={errorValue["isCompleted"]}
+                  />
+                </div>
+                <div className="col">
+                  <FormRadio
+                    type={"radio"}
+                    labelText={"Is Verified"}
+                    name={"isVerified"}
+                    itemList={[
+                      {
+                        name: "Yes",
+                        value: "yes",
+                      },
+                      { name: "No", value: "no" },
+                    ]}
+                    blurHandler={blurHandler}
+                    changeHandler={changeHandler}
+                    alert={errorValue["isVerified"]}
+                  />
+                </div>
+                <div className="col">
+                  <button type="submit" className="btn btn-success w-75">
+                    {isEdit ? "Edit Task" : "Create Task"}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

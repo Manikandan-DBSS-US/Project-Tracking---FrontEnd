@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import TableHeader from "../../components/TableHeader";
 import { userHeader } from "../../constants/TableHeaderData";
 import EditDelete from "../../components/EditDelete";
+import { LoadingSpinner } from "../../components/LoadingSpinner.js";
 
 const UserLists = () => {
   const dispatch = useDispatch();
@@ -32,11 +33,12 @@ const UserLists = () => {
     dispatch(deleteUser(id));
   };
 
-  console.log({ users });
-  if (isLoading) return <h1>Loading .....</h1>;
   return (
     <div>
-      <h3 className="text-primary">User Lists</h3>
+      <div className="d-flex gap-3">
+        <h3 className="text-primary">User Lists</h3>
+        {isLoading && <LoadingSpinner />}
+      </div>
       <div className="card">
         <div className="card-body">
           <table className="table table-responsive">
