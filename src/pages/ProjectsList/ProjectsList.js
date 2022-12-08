@@ -52,17 +52,17 @@ const ProjectsList = () => {
       </div>
       <div className="card">
         <div className="card-body">
-          <table className="table table-responsive">
+          <table className="table table-responsive table-hover">
             <thead className="bg-light">
               <tr>
                 <th>Project Id</th>
-                <th>Project Name</th>
-                <th>Project Description</th>
-                <th>Client Name</th>
-                <th>Project Start Date</th>
-                <th>Project End Date</th>
-                <th>Project Technologies</th>
-                <th>Selected Users</th>
+                <th>ProjectName</th>
+                <th>ProjectDescription</th>
+                <th>ClientName</th>
+                <th>ProjectStartDate</th>
+                <th>ProjectEndDate</th>
+                <th>ProjectTechnologies</th>
+                <th>SelectedUsers</th>
                 <th>options</th>
               </tr>
             </thead>
@@ -79,14 +79,18 @@ const ProjectsList = () => {
                       {new Date(element.projectStartDate).getMonth()} -
                       {new Date(element.projectStartDate).getDate()}
                     </td>
-                    <td>{element.projectEndDate}</td>
+                    <td>
+                      {new Date(element.projectEndDate).getFullYear()} -
+                      {new Date(element.projectEndDate).getMonth()} -
+                      {new Date(element.projectEndDate).getDate()}
+                    </td>
                     <td>
                       {element.technologiesUsed
-                        ? element.technologiesUsed.map((item) => item).join(",")
+                        ? element.technologiesUsed.map((item) => item).join(" , ")
                         : ""}
                     </td>
                     <td>
-                      {element.selectUsers.map((item) => item.value).join(",")}
+                      {element.selectUsers.map((item) => item.value).join(" , ")}
                     </td>
                     <td>
                       <div className="d-flex gap-2">

@@ -38,7 +38,6 @@ export const ProjectsListEdit = () => {
     getProjectsList();
   }, []);
 
-  console.log(project);
   const UserSchema = Yup.object().shape({
     projectName: Yup.string().required("Required"),
     projectDescription: Yup.string().required("Required"),
@@ -273,7 +272,6 @@ export const ProjectsListEdit = () => {
     </div>
   );
 };
-
 
 const MySelect = (props) => {
   const [userlist, setUserList] = useState([]);

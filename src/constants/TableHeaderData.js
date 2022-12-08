@@ -1,22 +1,22 @@
 export const userHeader = [
-  "User Id",
-  "User Name",
-  "First Name",
-  "Last Name",
+  "UserId",
+  "UserName",
+  "FirstName",
+  "LastName",
   "Email",
   "DOB",
   "Gender",
-  "Phone Number",
+  "PhoneNumber",
   "Actions",
 ];
 export const taskHeader = [
-  "Task Id",
+  "TaskId",
   "Name",
   "Description",
-  "Due Date",
+  "DueDate",
   "Effort",
-  "Is Completed",
-  "Is Verified",
+  "IsCompleted",
+  "IsVerified",
   "Actions",
 
 ];
