@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createTask, errorValidationTask, handleChangeTask } from "../../app/feature/Task/taskSlice";
-import FormInput from "../../common/FormInput";
-import FormRadio from "../../common/FormRadio";
-import FormText from "../../common/FormText";
+import {useNavigate} from 'react-router-dom';
+import {
+  createTask,
+  errorValidationTask,
+  handleChangeTask,
+  updateTask
+} from "../../app/feature/Task/taskSlice";
+
+import FormInput from "../../components/FormInput";
+import FormRadio from "../../components/FormRadio";
+import FormText from "../../components/FormText";
 import { taskCreateValidation } from "../../utils/Validation";
 
 const CreateTask = () => {
@@ -16,28 +23,31 @@ const CreateTask = () => {
     isCompleted,
     isVerified,
     isEdit,
+    editTaskId,
   } = useSelector((store) => store.taskReducer);
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    console.log({value});
     dispatch(handleChangeTask({ name, value }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      errorValidationTask(
-        taskCreateValidation({
-          name,
-          description,
-          dueDate,
-          effort,
-          isCompleted,
-          isVerified,
-        })
-      )
-    );
+    const errors = taskCreateValidation({
+      name,
+      description,
+      dueDate,
+      effort,
+      isCompleted,
+      isVerified,
+    });
+    if (Object.keys(errors).length) {
+      dispatch(errorValidationTask(errors));
+      return;
+    }
+    dispatch(errorValidationTask({}));
+
     const task = {
       name,
       description,
@@ -46,27 +56,40 @@ const CreateTask = () => {
       isCompleted,
       isVerified,
     };
-    // if (isEdit) {
-    //   dispatch(updateUser({editJobId,task}));
-    //   return;
-    // }
+    if (isEdit) {
+      dispatch(updateTask({ editTaskId, task }));
+      navigate("/tasks-list");
+      return;
+    }
 
     dispatch(createTask(task));
   };
+  useEffect(() => {
+    dispatch(errorValidationTask({}));
+  }, []);
 
-
-
+  const blurHandler = (e) => {
+    const errors = taskCreateValidation({
+      name,
+      description,
+      dueDate,
+      effort,
+      isCompleted,
+      isVerified,
+    });
+    console.log({ errors });
+    if (Object.keys(errors).length) {
+      dispatch(errorValidationTask(errors));
+      return;
+    }
+  };
   return (
-    <div className="container mt-1">
-      <div>
-        <h3 className="text-primary">{isEdit ? "Edit User" : "Create User"}</h3>
-      </div>
+    <div className="container  mb-5 p-3">
+      <h3 className="text-primary">{isEdit ? "Edit Task" : "Create Task"}</h3>
       <div className="m-3">
-        <div className="row shadow-lg rounded-1 p-4 mx-auto">
-          <div className="col">
-            <form 
-            onSubmit={submitHandler}
-            className="row gap-3">
+        <div className="row  shadow-lg rounded-1 p-4 mx-auto">
+          <div className="col   ">
+            <form onSubmit={submitHandler} className="row  gap-3">
               <div className="col d-flex flex-column gap-3">
                 <FormInput
                   type={"text"}
@@ -74,6 +97,7 @@ const CreateTask = () => {
                   name={"name"}
                   value={name}
                   changeHandler={changeHandler}
+                  blurHandler={blurHandler}
                   alert={errorValue["name"]}
                 />
                 <FormText
@@ -81,8 +105,8 @@ const CreateTask = () => {
                   name={"description"}
                   value={description}
                   changeHandler={changeHandler}
+                  blurHandler={blurHandler}
                   alert={errorValue["description"]}
-
                 />
 
                 <FormInput
@@ -90,9 +114,18 @@ const CreateTask = () => {
                   type={"date"}
                   name={"dueDate"}
                   value={dueDate}
+                  blurHandler={blurHandler}
                   changeHandler={changeHandler}
                   alert={errorValue["dueDate"]}
-
+                />
+                <FormInput
+                  labelText={"Effort"}
+                  type={"date"}
+                  name={"effort"}
+                  value={effort}
+                  blurHandler={blurHandler}
+                  changeHandler={changeHandler}
+                  alert={errorValue["effort"]}
                 />
 
                 <FormRadio
@@ -106,6 +139,7 @@ const CreateTask = () => {
                     },
                     { name: "No", value: "no" },
                   ]}
+                  blurHandler={blurHandler}
                   changeHandler={changeHandler}
                   alert={errorValue["isCompleted"]}
                 />
@@ -120,6 +154,7 @@ const CreateTask = () => {
                     },
                     { name: "No", value: "no" },
                   ]}
+                  blurHandler={blurHandler}
                   changeHandler={changeHandler}
                   alert={errorValue["isVerified"]}
                 />
@@ -151,11 +186,10 @@ const CreateTask = () => {
                     </p>
                   )}
                 </div> */}
-                  <button type="submit" className="btn btn-success w-50">
-                {isEdit ? "Edit Task" : "Create Task"}
-              </button>
+                <button type="submit" className="btn btn-success w-50">
+                  {isEdit ? "Edit Task" : "Create Task"}
+                </button>
               </div>
-            
             </form>
           </div>
         </div>

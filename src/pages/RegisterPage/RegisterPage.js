@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FormInput from "../../common/FormInput";
-import FormRadio from "../../common/FormRadio";
+import FormInput from "../../components/FormInput";
+import FormRadio from "../../components/FormRadio";
 import { useSelector, useDispatch } from "react-redux";
 import {
   errorValidation,

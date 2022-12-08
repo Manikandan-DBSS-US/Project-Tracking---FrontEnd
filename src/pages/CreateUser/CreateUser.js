@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FormInput from "../../common/FormInput";
-import FormRadio from "../../common/FormRadio";
+import FormInput from "../../components/FormInput";
+import FormRadio from "../../components/FormRadio";
 import { useSelector, useDispatch } from "react-redux";
 import {
   errorValidation,
@@ -11,6 +11,7 @@ import {
   updateUser,
 } from "../../app/feature/User/userSlice";
 import { registerValidation } from "../../utils/Validation";
+import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
@@ -28,33 +29,36 @@ const CreateUser = () => {
     isSubmit,
     errorValue,
     isEdit,
-    editJobId
+    editJobId,
   } = useSelector((store) => store.userReducer);
+  const navigate = useNavigate()
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    console.log({value});
+    console.log({ value });
     dispatch(handleChange({ name, value }));
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      errorValidation(
-        registerValidation({
-          userName,
-          firstName,
-          lastName,
-          email,
-          password,
-          dateOfBirth,
-          gender,
-          phoneNumber,
-          role,
-          isActive,
-          isSubmit,
-        })
-      )
-    );
+    const errors = registerValidation({
+      userName,
+      firstName,
+      lastName,
+      email,
+      password,
+      dateOfBirth,
+      gender,
+      phoneNumber,
+      role,
+      isActive,
+      isSubmit,
+    });
+    if (Object.keys(errors).length) {
+      dispatch(errorValidation(errors));
+      return;
+    }
+    dispatch(errorValidation({}));
+
     const user = {
       userName,
       firstName,
@@ -68,13 +72,37 @@ const CreateUser = () => {
       isActive,
     };
     if (isEdit) {
-      dispatch(updateUser({editJobId,user}));
+      dispatch(updateUser({ editJobId, user }));
+      navigate("/users-list")
       return;
     }
-
     dispatch(registerUser(user));
   };
 
+  useEffect(() => {
+    dispatch(errorValidation({}));
+  }, []);
+
+  const blurHandler = (e) => {
+    const errors = registerValidation({
+      userName,
+      firstName,
+      lastName,
+      email,
+      password,
+      dateOfBirth,
+      gender,
+      phoneNumber,
+      role,
+      isActive,
+      isSubmit,
+    });
+    console.log({ errors });
+    if (Object.keys(errors).length) {
+      dispatch(errorValidation(errors));
+      return;
+    }
+  };
   return (
     <div className="container mt-1">
       <div>
@@ -92,6 +120,7 @@ const CreateUser = () => {
                   value={firstName}
                   changeHandler={changeHandler}
                   alert={errorValue["firstName"]}
+                  blurHandler={blurHandler}
                 />
                 <FormInput
                   type={"text"}
@@ -99,7 +128,9 @@ const CreateUser = () => {
                   name={"email"}
                   value={email}
                   changeHandler={changeHandler}
+                  blurHandler={blurHandler}
                   alert={errorValue["email"]}
+
                 />
                 <FormInput
                   type={"text"}
@@ -115,6 +146,8 @@ const CreateUser = () => {
                   name={"dateOfBirth"}
                   value={dateOfBirth}
                   changeHandler={changeHandler}
+                  blurHandler={blurHandler}
+
                   alert={errorValue["dateOfBirth"]}
                 />
               </div>
@@ -125,6 +158,8 @@ const CreateUser = () => {
                   name={"userName"}
                   value={userName}
                   changeHandler={changeHandler}
+                  blurHandler={blurHandler}
+
                   alert={errorValue["userName"]}
                 />
                 <FormInput
@@ -133,20 +168,24 @@ const CreateUser = () => {
                   name={"lastName"}
                   value={lastName}
                   changeHandler={changeHandler}
+                  blurHandler={blurHandler}
+
                   alert={errorValue["lastName"]}
                 />
-            
-                  <FormInput
-                    type={"password"}
-                    labelText={"Password"}
-                    name={"password"}
-                    diabled={isEdit}
-                    value={password}
-                    changeHandler={changeHandler}
-                    alert={errorValue["password"]}
-                  />
-         
-                {/* <FormRadio
+
+                <FormInput
+                  type={"password"}
+                  labelText={"Password"}
+                  name={"password"}
+                  diabled={isEdit}
+                  value={password}
+                  changeHandler={changeHandler}
+                  blurHandler={blurHandler}
+
+                  alert={errorValue["password"]}
+                />
+
+             <FormRadio
                   type={"radio"}
                   labelText={"Gender"}
                   name={"gender"}
@@ -159,8 +198,10 @@ const CreateUser = () => {
                   ]}
                   changeHandler={changeHandler}
                   alert={errorValue["gender"]}
-                /> */}
-                <div>
+                  blurHandler={blurHandler}
+
+                /> 
+                {/* <div>
                   <h6>Gender</h6>
                   <div className="d-flex gap-2">
                     <div>
@@ -187,7 +228,7 @@ const CreateUser = () => {
                       {errorValue["gender"]}
                     </p>
                   )}
-                </div>
+                </div> */}
               </div>
               <div>
                 <input type="checkbox" />
