@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./login.css"
 import { BiLogIn } from "react-icons/bi";
-import FormInput from "../../common/FormInput";
+import FormInput from "../../components/FormInput";
 import {
   errorValidation,
   getAccessToken,

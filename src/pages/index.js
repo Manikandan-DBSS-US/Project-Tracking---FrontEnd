@@ -10,5 +10,5 @@ export {default as CreateUser} from './CreateUser/CreateUser';
 export {default as CreateTask} from './CreateTask/CreateTask';
 export {default as Dashboard} from './Dashboard/Dashboard';
 export {default as ProjectsList} from './ProjectsList/ProjectsList';
-export {default as TaskLists} from './TaskLists/TaskLists';
+export {default as TasksList} from './TasksList/TasksList';
 export {default as UsersList} from './UsersList/UsersList';

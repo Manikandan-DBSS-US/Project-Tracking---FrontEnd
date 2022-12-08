@@ -9,10 +9,13 @@ import {
 import { HiOutlineTrash } from "react-icons/hi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import TableHeader from "../../components/TableHeader";
+import { userHeader } from "../../constants/TableHeaderData";
+import EditDelete from "../../components/EditDelete";
 
 const UserLists = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { token, users, isLoading } = useSelector((store) => store.userReducer);
   console.log({ token });
   useEffect(() => {
@@ -20,10 +23,9 @@ const UserLists = () => {
   }, []);
 
   const editHandler = (id) => {
-    navigate("/create-user")
-    dispatch(setEdit())
+    navigate("/create-user");
+    dispatch(setEdit());
     dispatch(editUser(id));
-    
   };
 
   const deleteHandler = (id) => {
@@ -37,55 +39,29 @@ const UserLists = () => {
       <h3 className="text-primary">User Lists</h3>
       <div className="card">
         <div className="card-body">
-        <table className="table table-responsive">
-          <thead className="bg-light">
-            <tr>
-              {[
-                "User Name",
-                "First Name",
-                "Last Name",
-                "Email",
-                "DOB",
-                "Gender",
-                "Phone Number",
-                "Actions",
-              ].map((title, index) => (
-                <th key={index}>{title}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {users &&
-              users?.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.userName}</td>
-                  <td>{data.firstName}</td>
-                  <td>{data.lastName}</td>
-                  <td>{data.email}</td>
-                  <td>{data.dateOfBirth}</td>
-                  <td>{data.gender}</td>
-                  <td>{data.phoneNumber}</td>
+          <table className="table table-responsive">
+            <TableHeader headerData={userHeader} />
+            <tbody>
+              {users &&
+                users?.map((data, index) => (
+                  <tr key={index}>
+                    <td>{data._id}</td>
+                    <td>{data.userName}</td>
+                    <td>{data.firstName}</td>
+                    <td>{data.lastName}</td>
+                    <td>{data.email}</td>
+                    <td>{data.dateOfBirth}</td>
+                    <td>{data.gender}</td>
+                    <td>{data.phoneNumber}</td>
 
-                  <td className="">
-                    <span
-                      onClick={() => editHandler(data._id)}
-                      className="mx-1 text-success"
-                    >
-                      <AiOutlineEdit />
-                    </span>
-                    <span
-                      onClick={() => {
-                        deleteHandler(data._id);
-                      }}
-                      className="mx-1 text-danger"
-                    >
-                      <HiOutlineTrash />
-                    </span>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                    <EditDelete
+                      editHandler={() => editHandler(data._id)}
+                      deleteHandler={() => deleteHandler(data._id)}
+                    />
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

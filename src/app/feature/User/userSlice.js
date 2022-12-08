@@ -117,6 +117,7 @@ const userSlice = createSlice({
       };
     },
     errorValidation: (state, { payload }) => {
+      console.log({payload});
       state.errorValue = payload;
     },
     setEdit: (state) => {
@@ -135,7 +136,6 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [registerUser.fulfilled]: (state, { payload }) => {
-      resetValues();
       toast.success("User Created!");
     },
     [registerUser.rejected]: (state, { payload }) => {
