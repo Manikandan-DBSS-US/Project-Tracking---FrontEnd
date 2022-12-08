@@ -18,6 +18,7 @@ export const registerValidation = ({
   dateOfBirth,
   gender,
   phoneNumber,
+  isEdit
 }) => {
   const error = {};
 
@@ -35,9 +36,9 @@ export const registerValidation = ({
   } else if (!isEmail(email)) {
     error.email = "Enter valid email";
   }
-  if (!password) {
+  if (!password && !isEdit) {
     error.password = "Password is required";
-  } else if (password.length < 6) {
+  } else if (password.length < 6 && !isEdit) {
     error.password = "Password must be more than 6 characters";
   }
   if (!dateOfBirth) {

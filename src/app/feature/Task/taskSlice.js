@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { updateUserThunk } from "../User/userThunk";
-import { createTaskThunk, deleteTaskThunk, getAllTaskThunk } from "./taskThunk";
+import { createTaskThunk, deleteTaskThunk, getAllTaskThunk, updateTaskThunk } from "./taskThunk";
 
 const initialState = {
   errorValue: {},
@@ -33,8 +32,8 @@ export const getAllTask = createAsyncThunk(
 
 export const updateTask = createAsyncThunk(
   "task/updateTask",
-  async ({editJobId, task} ,thunkAPI) => {
-    return updateUserThunk(`user/${editJobId}`,task, thunkAPI);
+  async ({editTaskId, task} ,thunkAPI) => {
+    return updateTaskThunk(`task/${editTaskId}`,task, thunkAPI);
   }
 )
 
@@ -72,9 +71,11 @@ const taskSlice = createSlice({
       state.isEdit = true;
     },
     editTask: (state, { payload }) => {
+      console.log({payload});
       const result = state.tasks.find((task) => task._id === payload);
-      console.log({ result });
-      return { ...state, editTaskId: payload, ...result };
+      const date = result.dueDate.substring(0, result.dueDate.indexOf("T"))
+      const updateResult = {...result,["dueDate"]:date}
+      return { ...state, editTaskId: payload, ...updateResult };
     },
   },
   extraReducers: {
@@ -110,10 +111,13 @@ const taskSlice = createSlice({
       },
       [updateTask.fulfilled]: (state, { payload }) => {
         state.isLoading = false;
+        console.log({fullfilled:payload});
         toast.success("User updated!")
         state.isEdit = false
       },
       [updateTask.rejected]: (state, { payload }) => {
+        console.log({rejected:payload});
+
         state.isLoading = false;
         toast.error(payload)
       },

@@ -52,7 +52,14 @@ const UserLists = () => {
                     <td>{data.firstName}</td>
                     <td>{data.lastName}</td>
                     <td>{data.email}</td>
-                    <td>{data.dateOfBirth}</td>
+                    <td>
+                      {data.dateOfBirth &&
+                        data.dateOfBirth.substring(
+                          0,
+                          data.dateOfBirth.indexOf("T")
+                        )}
+                    </td>
+
                     <td>{data.gender}</td>
                     <td>{data.phoneNumber}</td>
 
