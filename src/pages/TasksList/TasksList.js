@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteTask, editTask, getAllTask, setEditTask } from "../../app/feature/Task/taskSlice";
+import {
+  deleteTask,
+  editTask,
+  getAllTask,
+  setEditTask,
+} from "../../app/feature/Task/taskSlice";
 import EditDelete from "../../components/EditDelete";
 import TableHeader from "../../components/TableHeader";
 import { taskHeader } from "../../constants/TableHeaderData";
@@ -12,6 +17,7 @@ const TasksList = () => {
 
   const editHandler = (id) => {
     navigate("/create-task");
+    console.log({id});
     dispatch(setEditTask());
     dispatch(editTask(id));
   };
@@ -38,7 +44,10 @@ const TasksList = () => {
                     <td>{data._id}</td>
                     <td>{data.name}</td>
                     <td>{data.description}</td>
-                    <td>{data.dueDate}</td>
+                    <td>
+                      {data.dueDate &&
+                        data.dueDate.substring(0, data.dueDate.indexOf("T"))}
+                    </td>
                     <td>{data.effort}</td>
                     <td>{data.isCompleted}</td>
                     <td>{data.isVerified}</td>

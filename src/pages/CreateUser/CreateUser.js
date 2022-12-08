@@ -31,7 +31,7 @@ const CreateUser = () => {
     isEdit,
     editJobId,
   } = useSelector((store) => store.userReducer);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -52,6 +52,7 @@ const CreateUser = () => {
       role,
       isActive,
       isSubmit,
+      isEdit,
     });
     if (Object.keys(errors).length) {
       dispatch(errorValidation(errors));
@@ -72,8 +73,23 @@ const CreateUser = () => {
       isActive,
     };
     if (isEdit) {
-      dispatch(updateUser({ editJobId, user }));
-      navigate("/users-list")
+      dispatch(
+        updateUser({
+          editJobId,
+          user: {
+            userName,
+            firstName,
+            lastName,
+            email,
+            dateOfBirth,
+            gender,
+            phoneNumber,
+            role,
+            isActive,
+          },
+        })
+      );
+      navigate("/users-list");
       return;
     }
     dispatch(registerUser(user));
@@ -81,6 +97,7 @@ const CreateUser = () => {
 
   useEffect(() => {
     dispatch(errorValidation({}));
+   
   }, []);
 
   const blurHandler = (e) => {
@@ -103,6 +120,7 @@ const CreateUser = () => {
       return;
     }
   };
+
   return (
     <div className="container mt-1">
       <div>
@@ -130,7 +148,6 @@ const CreateUser = () => {
                   changeHandler={changeHandler}
                   blurHandler={blurHandler}
                   alert={errorValue["email"]}
-
                 />
                 <FormInput
                   type={"text"}
@@ -147,7 +164,6 @@ const CreateUser = () => {
                   value={dateOfBirth}
                   changeHandler={changeHandler}
                   blurHandler={blurHandler}
-
                   alert={errorValue["dateOfBirth"]}
                 />
               </div>
@@ -159,7 +175,6 @@ const CreateUser = () => {
                   value={userName}
                   changeHandler={changeHandler}
                   blurHandler={blurHandler}
-
                   alert={errorValue["userName"]}
                 />
                 <FormInput
@@ -169,23 +184,23 @@ const CreateUser = () => {
                   value={lastName}
                   changeHandler={changeHandler}
                   blurHandler={blurHandler}
-
                   alert={errorValue["lastName"]}
                 />
 
-                <FormInput
-                  type={"password"}
-                  labelText={"Password"}
-                  name={"password"}
-                  diabled={isEdit}
-                  value={password}
-                  changeHandler={changeHandler}
-                  blurHandler={blurHandler}
+                {!isEdit && (
+                  <FormInput
+                    type={"password"}
+                    labelText={"Password"}
+                    name={"password"}
+                    isEdit={isEdit}
+                    value={password}
+                    changeHandler={changeHandler}
+                    blurHandler={blurHandler}
+                    alert={errorValue["password"]}
+                  />
+                )}
 
-                  alert={errorValue["password"]}
-                />
-
-             <FormRadio
+                <FormRadio
                   type={"radio"}
                   labelText={"Gender"}
                   name={"gender"}
@@ -199,8 +214,7 @@ const CreateUser = () => {
                   changeHandler={changeHandler}
                   alert={errorValue["gender"]}
                   blurHandler={blurHandler}
-
-                /> 
+                />
                 {/* <div>
                   <h6>Gender</h6>
                   <div className="d-flex gap-2">

@@ -1,11 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   createTask,
   errorValidationTask,
   handleChangeTask,
-  updateTask
+  updateTask,
 } from "../../app/feature/Task/taskSlice";
 
 import FormInput from "../../components/FormInput";
@@ -25,7 +25,7 @@ const CreateTask = () => {
     isEdit,
     editTaskId,
   } = useSelector((store) => store.taskReducer);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const changeHandler = (e) => {
     const { name, value } = e.target;

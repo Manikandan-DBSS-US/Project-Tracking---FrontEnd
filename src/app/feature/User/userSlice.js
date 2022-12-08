@@ -126,8 +126,9 @@ const userSlice = createSlice({
     editUser:(state,{payload}) => {
       console.log(state.users);
       const result = state.users.find(user => user._id === payload)
-      console.log({result});
-      return {...state,editJobId:payload,...result}
+      const date = result.dateOfBirth.substring(0, result.dateOfBirth.indexOf("T"))
+      const updateResult = {...result,["dateOfBirth"]:date}
+      return {...state,editJobId:payload,...updateResult}
     }
   },
   extraReducers: {
