@@ -123,6 +123,7 @@ const userSlice = createSlice({
     setEdit: (state) => {
       state.isEdit = true;
     },
+
     editUser:(state,{payload}) => {
       console.log(state.users);
       const result = state.users.find(user => user._id === payload)

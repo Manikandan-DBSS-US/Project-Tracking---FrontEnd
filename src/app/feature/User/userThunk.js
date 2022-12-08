@@ -56,6 +56,7 @@ export const updateUserThunk = async (url,user, thunkAPI) => {
   try {
     const resp = await customFetch.put(url,user);
     thunkAPI.dispatch(resetValues());
+    thunkAPI.dispatch(getAllUser());
     return resp.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.msg);

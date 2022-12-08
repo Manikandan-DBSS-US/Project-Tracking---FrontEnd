@@ -8,11 +8,12 @@ import {
   setEditTask,
 } from "../../app/feature/Task/taskSlice";
 import EditDelete from "../../components/EditDelete";
+import { Loading } from "../../components/Loading";
 import TableHeader from "../../components/TableHeader";
 import { taskHeader } from "../../constants/TableHeaderData";
 const TasksList = () => {
   const dispatch = useDispatch();
-  const { tasks } = useSelector((store) => store.taskReducer);
+  const { tasks,isLoading } = useSelector((store) => store.taskReducer);
   const navigate = useNavigate();
 
   const editHandler = (id) => {
@@ -30,9 +31,11 @@ const TasksList = () => {
   useEffect(() => {
     dispatch(getAllTask());
   }, []);
+  if (isLoading) return <Loading />;
+
   return (
     <div>
-      <h3 className="text-primary">User Lists</h3>
+      <h3 className="text-primary">Tasks List</h3>
       <div className="card">
         <div className="card-body">
           <table className="table table-responsive">

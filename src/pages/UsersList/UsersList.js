@@ -6,13 +6,11 @@ import {
   getAllUser,
   setEdit,
 } from "../../app/feature/User/userSlice";
-import { HiOutlineTrash } from "react-icons/hi";
-import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import TableHeader from "../../components/TableHeader";
 import { userHeader } from "../../constants/TableHeaderData";
 import EditDelete from "../../components/EditDelete";
-import { LoadingSpinner } from "../../components/LoadingSpinner.js";
+import { Loading } from "../../components/Loading";
 
 const UserLists = () => {
   const dispatch = useDispatch();
@@ -32,12 +30,11 @@ const UserLists = () => {
   const deleteHandler = (id) => {
     dispatch(deleteUser(id));
   };
-
+  if (isLoading) return <Loading />;
   return (
     <div>
       <div className="d-flex gap-3">
         <h3 className="text-primary">User Lists</h3>
-        {isLoading && <LoadingSpinner />}
       </div>
       <div className="card">
         <div className="card-body">

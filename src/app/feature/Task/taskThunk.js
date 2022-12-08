@@ -26,6 +26,7 @@ export const getAllTaskThunk = async (url, thunkAPI) => {
     try {
       const resp = await customFetch.put(url,task);
     thunkAPI.dispatch(resetValuesTask());
+    thunkAPI.dispatch(getAllTask())
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
