@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { LoadingSpinner } from "../../common/LoadingSpinner";
+import { LoadingSpinner } from "../../components/LoadingSpinner.js";
 
 const ProjectsList = () => {
   const [loading, setLoading] = useState(true);

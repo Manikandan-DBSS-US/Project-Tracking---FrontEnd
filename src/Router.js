@@ -32,14 +32,11 @@ const Router = () => {
         <Route index element={<Dashboard />} />
         <Route path="create-user" element={<CreateUser />} />
         <Route path="users-list" element={<UsersList />} />
-<<<<<<< HEAD
         <Route path="create-project" element={<CreateProject />} />
         <Route path="projects-list" element={<ProjectsList />} />
         <Route path="projects-list/:id" element={<ProjectsListEdit />} />
         {/* <Route path="/*" element={<ErrorPage />} /> */}
 
-=======
->>>>>>> fa2f11014f88a3a5eca31ff5d3b776fc4e9dc94a
         <Route path="create-task" element={<CreateTask />} />
         <Route path="tasks-list" element={<TasksList />} />
 

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import { LoadingSpinner } from "../../common/LoadingSpinner.js";
+import { LoadingSpinner } from "../../components/LoadingSpinner.js";
 
 export const ProjectsListEdit = () => {
   const [loading, setLoading] = useState(true);
