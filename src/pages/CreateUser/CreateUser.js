@@ -211,6 +211,7 @@ const CreateUser = () => {
                     },
                     { name: "Female", value: "female" },
                   ]}
+                  value={gender}
                   changeHandler={changeHandler}
                   alert={errorValue["gender"]}
                   blurHandler={blurHandler}

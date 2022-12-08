@@ -14,7 +14,6 @@ import FormText from "../../components/FormText";
 import { taskCreateValidation } from "../../utils/Validation";
 
 const CreateTask = () => {
-  const a = 10;
   const {
     errorValue,
     name,
@@ -153,6 +152,7 @@ const CreateTask = () => {
                       },
                       { name: "No", value: "no" },
                     ]}
+                    value={isCompleted}
                     blurHandler={blurHandler}
                     changeHandler={changeHandler}
                     alert={errorValue["isCompleted"]}
@@ -163,6 +163,8 @@ const CreateTask = () => {
                     type={"radio"}
                     labelText={"Is Verified"}
                     name={"isVerified"}
+                    value={isVerified}
+
                     itemList={[
                       {
                         name: "Yes",

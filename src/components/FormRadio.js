@@ -4,6 +4,7 @@ const FormRadio = ({
   itemList,
   labelText,
   changeHandler,
+  value,
   alert,
 }) => {
   return (
@@ -13,7 +14,7 @@ const FormRadio = ({
         {itemList.map((item, index ) => {
           return (
             <div key={index}>
-              <input name={name} type={type} value={item.value} onChange={changeHandler} />{" "}
+              <input name={name} type={type} value={value} onChange={changeHandler} />{" "}
               {item.name}
             </div>
           );
